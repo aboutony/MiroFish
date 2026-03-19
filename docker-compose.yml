@@ -1,14 +1,43 @@
+version: '3.8'
+
 services:
-  mirofish:
-    image: ghcr.io/666ghj/mirofish:latest
-    # 加速镜像（如拉取缓慢可替换上方地址）
-    # image: ghcr.nju.edu.cn/666ghj/mirofish:latest
-    container_name: mirofish
-    env_file:
-      - .env
+  # Vector Store for Agent "Long-Term Memory"
+  chromadb:
+    image: chromadb/chroma:latest
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend/data/chroma:/chroma/chroma
+
+  # Graph Database for Relationship Mapping
+  neo4j:
+    image: neo4j:community
+    ports:
+      - "7474:7474"
+      - "7687:7687"
+    environment:
+      - NEO4J_AUTH=neo4j/password123
+    volumes:
+      - ./backend/data/neo4j:/data
+
+  # The MiroFish Backend
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    env_file: .env
+    ports:
+      - "5001:5001"
+    depends_on:
+      - chromadb
+      - neo4j
+
+  # The MiroFish Frontend
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
     ports:
       - "3000:3000"
-      - "5001:5001"
-    restart: unless-stopped
-    volumes:
-      - ./backend/uploads:/app/backend/uploads
+    depends_on:
+      - backend

@@ -1,0 +1,28 @@
+{
+  "market_archetypes": [
+    {
+      "role": "Panic Seller",
+      "risk_tolerance": "Low",
+      "behavior": "Reacts aggressively to negative news headlines. Prioritizes capital preservation over long-term gains. Likely to sell if price drops more than 3% in a single round.",
+      "influence_weight": 0.4
+    },
+    {
+      "role": "Value Investor",
+      "risk_tolerance": "Medium",
+      "behavior": "Ignores short-term volatility. Focuses on 'Hard Data' like P/E ratios. Sees price drops as 'Buying Opportunities' rather than threats.",
+      "influence_weight": 0.6
+    },
+    {
+      "role": "The Whale",
+      "risk_tolerance": "High",
+      "behavior": "Large-scale institutional player. Their moves create 'Liquidity Events.' Other agents tend to follow their lead (The Herding Effect).",
+      "influence_weight": 1.0
+    },
+    {
+      "role": "Diamond Hands",
+      "risk_tolerance": "Ultra-High",
+      "behavior": "Extremely stubborn. Will not sell regardless of news sentiment or price drops. Acts as a price floor during crashes.",
+      "influence_weight": 0.2
+    }
+  ]
+}
